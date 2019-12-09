@@ -1,4 +1,4 @@
-function code(commands: Array<number>) {
+function code(commands: Array<number>): number | void {
   for (let i = 0; i < commands.length; i += 1) {
     const resultPos: number = commands[i + 3];
     const firstNum: number = commands[commands[i + 1]];
@@ -24,7 +24,7 @@ for (let i = 0; i < 100; i += 1) {
     const input: Array<number> = [];
     input[1] = i;
     input[2] = j;
-    const output: number = code(input);
+    const output: any = code(input);
 
     if (output === 19690720) {
       console.log(i * 100 + j);

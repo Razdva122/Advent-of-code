@@ -1,4 +1,4 @@
-function code(commands: Array<number>) {
+function code(commands: Array<number>): number | void {
   for (let i = 0; i < commands.length; i += 1) {
     const resultPos: number = commands[i + 3];
     const firstNum: number = commands[commands[i + 1]];
@@ -21,4 +21,4 @@ function code(commands: Array<number>) {
 const input: Array<number> = [];
 input[1] = 12;
 input[2] = 2;
-const output: number = code(input);
+const output: any = code(input);
