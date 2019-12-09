@@ -23,7 +23,7 @@ function codeSolve(inputNumber, input) {
 
     switch(secondNumMode) {
       case 0:
-        nums[1] = input[input[i + 2] || 0] || 0;
+        nums[1] = input[input[i + 2]] || 0;
         break;
       case 1:
         nums[1] = input[i + 2] || 0;
