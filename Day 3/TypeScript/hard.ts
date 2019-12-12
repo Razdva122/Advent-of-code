@@ -1,17 +1,18 @@
 function crossedWires(movesOfFirstWire: Array<string>, movesOfSecondWire: Array<string>) :number {
-  interface Memory {
-    [key: string]: boolean;
+  interface IWireMemory {
+    isFirst: boolean,
+    distance: number,
   }
-  const memory: Memory = {};
+  interface IMemory {
+    [key: string]: IWireMemory;
+  }
+  const memory: IMemory = {};
   const firstWireCoord: [number, number] = [0, 0];
   const secondWireCoord: [number, number] = [0, 0];
   type directions = 'R' | 'L' | 'U' | 'D';
-  interface Moves {
-    R: [number, number],
-    L: [number, number],
-    U: [number, number],
-    D: [number, number],
-  }
+  type Moves = {
+    [key in directions]: [number, number];
+  };
   const moves: Moves = {
     R: [1, 0],
     L: [-1, 0],
@@ -19,14 +20,21 @@ function crossedWires(movesOfFirstWire: Array<string>, movesOfSecondWire: Array<
     D: [0, -1],
   };
   let distance: number = Number.MAX_SAFE_INTEGER;
+  let wireLength: [number, number] = [0, 0];
   for (let i = 0; i < movesOfFirstWire.length; i += 1) {
     const direction: directions = movesOfFirstWire[i].slice(0, 1) as directions;
     const steps: number = Number(movesOfFirstWire[i].slice(1));
     const coords: [number, number] = moves[direction];
     for (let j = 1; j <= steps; j += 1) {
+      wireLength[0] += 1;
       firstWireCoord[0] += coords[0];
       firstWireCoord[1] += coords[1];
-      memory[firstWireCoord.join()] = true;
+      if (!memory[firstWireCoord.join()]) {
+        memory[firstWireCoord.join()] = {
+          isFirst: true,
+          distance: wireLength[0],
+        }
+      }
     }
   }
 
@@ -35,10 +43,13 @@ function crossedWires(movesOfFirstWire: Array<string>, movesOfSecondWire: Array<
     const steps: number = Number(movesOfSecondWire[i].slice(1));
     const coords: [number, number] = moves[direction];
     for (let j = 1; j <= steps; j += 1) {
+      wireLength[1] += 1;
       secondWireCoord[0] += coords[0];
       secondWireCoord[1] += coords[1];
-      if (memory[secondWireCoord.join()]) {
-        distance = Math.min(Math.abs(secondWireCoord[0]) + Math.abs(secondWireCoord[1]), distance);
+      const wirePointData: undefined | IWireMemory = memory[secondWireCoord.join()];
+      if (wirePointData && wirePointData.isFirst) {
+        wirePointData.isFirst = false;
+        distance = Math.min(wirePointData.distance + wireLength[1], distance);
       }
     }
   }
