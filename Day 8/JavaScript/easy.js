@@ -10,7 +10,7 @@ function test(arrayInput, size) {
 		}
 		return obj;
 	});
-	memoryData.sort((a,b) => a['0'] - b['0']);
+	memoryData.sort((a, b) => a['0'] - b['0']);
 	return memoryData;
 }
 
