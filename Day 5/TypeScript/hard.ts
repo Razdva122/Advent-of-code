@@ -43,10 +43,12 @@ function codeSolve(inputNumbers: Array<number>, commands: Array<number>) {
       //first less than second
       case 7:
         commands[nums[2]] = nums[0] < nums[1] ? 1 : 0;
+        i += 3;
         break;
       //first equals second
       case 8:
         commands[nums[2]] = nums[0] === nums[1] ? 1 : 0;
+        i += 3;
         break;
       //end commands
       case 99:
