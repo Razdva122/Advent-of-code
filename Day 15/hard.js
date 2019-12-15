@@ -142,20 +142,16 @@ function createMap(curPos, programStateIn) {
 createMap(curPos, new ProgramState(0, 0, [], [...input]));
 
 function fillOxy() {
-  let level = 0;
+  let level = -1; //we shouldnt count last cycle so it's -1
   let curLevel = [oxyPosition];
   let nextLevel = [];
-  let isStart = false;
 
-  while (curLevel.length > 0 && !isStart) {
+  while (curLevel.length > 0) {
     level += 1;
     curLevel.forEach((position) => {
       movements.forEach((move) => {
         const newPos = [position[0] + move[0], position[1] + move[1]];
         //init Values
-        if (newPos[0] === 25 && newPos[1] === 25) {
-          isStart = true;
-        }
         if (map[newPos[0]][newPos[1]] === '.') {
           nextLevel.push([newPos[0], newPos[1]]);
           map[newPos[0]][newPos[1]] = 'O';
