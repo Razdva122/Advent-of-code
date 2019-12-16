@@ -1,0 +1,28 @@
+function transmission(input, cycles) {
+  let level = [...input];
+  let nextLevel = [];
+  const basePattern = [0, 1, 0, -1];
+  let currentPattern = [];
+  for (let i = 0; i < cycles; i += 1) {
+    while (nextLevel.length < level.length) {
+      currentPattern = basePattern.reduce((acc, num, index) => {
+        const newPart = new Array(nextLevel.length + 1).fill(num);
+        acc = [...acc, ...newPart];
+        return acc;
+      }, []);
+      let value = 0;
+      for (let j = 0; j < level.length; j += 1) {
+        value += level[j] * currentPattern[(j + 1) % currentPattern.length];
+      }
+      nextLevel.push(Number(String(value).split('').pop()));
+    }
+    level = nextLevel;
+    nextLevel = [];
+  }
+  return level;
+}
+
+let input = '59704176224151213770484189932636989396016853707543672704688031159981571127975101449262562108536062222616286393177775420275833561490214618092338108958319534766917790598728831388012618201701341130599267905059417956666371111749252733037090364984971914108277005170417001289652084308389839318318592713462923155468396822247189750655575623017333088246364350280299985979331660143758996484413769438651303748536351772868104792161361952505811489060546839032499706132682563962136170941039904873411038529684473891392104152677551989278815089949043159200373061921992851799948057507078358356630228490883482290389217471790233756775862302710944760078623023456856105493';
+input = input.split('').map(item => Number(item));
+
+transmission(input, 100);
