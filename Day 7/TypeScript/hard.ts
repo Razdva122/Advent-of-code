@@ -19,6 +19,15 @@ class Program {
   runProgram() {
     codeSolve(this.state);
   }
+  copyProgram() {
+    const newProgram = new Program();
+    newProgram.state.isRun = this.state.isRun;
+    newProgram.state.position = this.state.position;
+    newProgram.state.input = [...this.state.input];
+    newProgram.state.commands = [...this.state.commands];
+    newProgram.state.output = [...this.state.output];
+    return newProgram;
+  }
 }
 
 
